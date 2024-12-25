@@ -47,102 +47,157 @@ class TdeeAppState extends State<TdeeApp> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Person Information'),
+        backgroundColor: Colors.blue,
       ),
-      body: Container(
-        margin: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Image.asset(
-                'assets/images/weightlifter.png', // Corrected file name
-                width: 100,
-                height: 100,
-              ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Center(
+          child: Container(
+            width: double.infinity,
+            constraints: const BoxConstraints(maxWidth: 500),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.blue),
             ),
-            SizedBox(height: 20),
-            Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Gender:'),
-                SizedBox(width: 10),
+                  Center(
+                  child: Image.asset(
+                    'assets/images/weightlifter.png', // Replace with actual path
+                    width: 70,
+                    height: 70,
+                  ),
+                ),
+                const SizedBox(height: 20),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Radio(
-                      value: 'Male',
-                      groupValue: _gender,
-                      onChanged: (value) {
-                        setState(() {
-                          _gender = value!;
-                        });
-                      },
+                    const Text('เพศ:'),
+                    const SizedBox(width: 10),
+                    Row(
+                      children: [
+                        Radio(
+                          value: 'Male',
+                          groupValue: _gender,
+                          onChanged: (value) {
+                            setState(() {
+                              _gender = value!;
+                            });
+                          },
+                        ),
+                        const Text('ชาย'),
+                      ],
                     ),
-                    Text('Male'), // Corrected label
+                    Row(
+                      children: [
+                        Radio(
+                          value: 'Female',
+                          groupValue: _gender,
+                          onChanged: (value) {
+                            setState(() {
+                              _gender = value!;
+                            });
+                          },
+                        ),
+                        const Text('หญิง'),
+                      ],
+                    ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 'Female',
-                      groupValue: _gender,
-                      onChanged: (value) {
-                        setState(() {
-                          _gender = value!;
-                        });
-                      },
+                const SizedBox(height: 15),
+                TextField(
+                  controller: _ageController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'ป้อนอายุ',
+                    filled: true,
+                    fillColor: Colors.blue[50],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Colors.blue.shade300),
                     ),
-                    Text('Female'),
-                  ],
+                  ),
                 ),
+                const SizedBox(height: 15),
+                TextField(
+                  controller: _weightController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'ป้อนน้ำหนัก (กก.)',
+                    filled: true,
+                    fillColor: Colors.blue[50],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Colors.blue.shade300),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                TextField(
+                  controller: _heightController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'ป้อนส่วนสูง (ซม.)',
+                    filled: true,
+                    fillColor: Colors.blue[50],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Colors.blue.shade300),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('กิจกรรมที่ทำในประจำวัน:'),
+                ),
+                const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  value: _activityLevel,
+                  onChanged: (value) {
+                    setState(() {
+                      _activityLevel = value!;
+                    });
+                  },
+                  items: _activityMultiplier.keys
+                      .map((level) => DropdownMenuItem(
+                            value: level,
+                            child: Text(level),
+                          ))
+                      .toList(),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.blue[50],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Colors.blue.shade300),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _calculate,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    minimumSize: const Size(double.infinity, 50),
+                  ),
+                  child: const Text('คำนวณ'),
+                ),
+                const SizedBox(height: 20),
+                if (_bmr != null && _tdee != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text('BMR: ${_bmr!.toStringAsFixed(2)} cal'),
+                      Text('TDEE: ${_tdee!.toStringAsFixed(2)} cal'),
+                    ],
+                  ),
               ],
             ),
-            TextField(
-              controller: _ageController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Enter Age'),
-            ),
-            TextField(
-              controller: _weightController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Enter Weight (kg)'),
-            ),
-            TextField(
-              controller: _heightController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Enter Height (cm)'),
-            ),
-            SizedBox(height: 10),
-            Text('Activity Level:'),
-            DropdownButton<String>(
-              value: _activityLevel,
-              onChanged: (value) {
-                setState(() {
-                  _activityLevel = value!;
-                });
-              },
-              items: _activityMultiplier.keys
-                  .map((level) => DropdownMenuItem(
-                        value: level,
-                        child: Text(level), // Corrected text
-                      ))
-                  .toList(),
-            ),
-            SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: _calculate,
-                child: Text('Calculate'),
-              ),
-            ),
-            SizedBox(height: 20),
-            if (_bmr != null && _tdee != null)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('BMR: ${_bmr!.toStringAsFixed(2)} cal'),
-                  Text('TDEE: ${_tdee!.toStringAsFixed(2)} cal'),
-                ],
-              ),
-          ],
+          ),
         ),
       ),
     );
