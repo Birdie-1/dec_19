@@ -8,8 +8,6 @@ class TdeeApp extends StatefulWidget {
 }
 
 class TdeeAppState extends State<TdeeApp> {
-<<<<<<< HEAD
-=======
   TextEditingController _weightController = TextEditingController();
   TextEditingController _heightController = TextEditingController();
   TextEditingController _ageController = TextEditingController();
@@ -44,41 +42,10 @@ class TdeeAppState extends State<TdeeApp> {
     }
   }
 
->>>>>>> 8d90c4f78a7aaefd5dc0d626213c75d77c457225
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-<<<<<<< HEAD
-        title: Text('Person Information'),
-      ),
-      body: Container(
-        margin: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            SizedBox(height: 20,),
-            Container(width: 100,height: 100,)
-               child: Image.asset
-            Text(
-              'Enter your personal information',
-              style: TextStyle(fontSize: 20, color: Colors.blue),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter your name...',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter your age...',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            // Add more widgets or input fields as needed
-          ],
-=======
         title: const Text('Person Information'),
         backgroundColor: Colors.blue,
       ),
@@ -97,55 +64,24 @@ class TdeeAppState extends State<TdeeApp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                  Center(
+                Center(
                   child: Image.asset(
-                    'assets/images/weightlifter.png', // Replace with actual path
+                    'assets/images/weightlifter.png', // Make sure to use the correct image path
                     width: 70,
                     height: 70,
                   ),
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('เพศ:'),
-                    const SizedBox(width: 10),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Male',
-                          groupValue: _gender,
-                          onChanged: (value) {
-                            setState(() {
-                              _gender = value!;
-                            });
-                          },
-                        ),
-                        const Text('ชาย'),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                          value: 'Female',
-                          groupValue: _gender,
-                          onChanged: (value) {
-                            setState(() {
-                              _gender = value!;
-                            });
-                          },
-                        ),
-                        const Text('หญิง'),
-                      ],
-                    ),
-                  ],
+                const Text(
+                  'Enter your personal information',
+                  style: TextStyle(fontSize: 20, color: Colors.blue),
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
                 TextField(
                   controller: _ageController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: 'ป้อนอายุ',
+                    labelText: 'Age',
                     filled: true,
                     fillColor: Colors.blue[50],
                     border: OutlineInputBorder(
@@ -154,12 +90,12 @@ class TdeeAppState extends State<TdeeApp> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
                 TextField(
                   controller: _weightController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: 'ป้อนน้ำหนัก (กก.)',
+                    labelText: 'Weight (kg)',
                     filled: true,
                     fillColor: Colors.blue[50],
                     border: OutlineInputBorder(
@@ -168,12 +104,12 @@ class TdeeAppState extends State<TdeeApp> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
                 TextField(
                   controller: _heightController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: 'ป้อนส่วนสูง (ซม.)',
+                    labelText: 'Height (cm)',
                     filled: true,
                     fillColor: Colors.blue[50],
                     border: OutlineInputBorder(
@@ -185,7 +121,7 @@ class TdeeAppState extends State<TdeeApp> {
                 const SizedBox(height: 20),
                 const Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('กิจกรรมที่ทำในประจำวัน:'),
+                  child: Text('Activity Level:'),
                 ),
                 const SizedBox(height: 10),
                 DropdownButtonFormField<String>(
@@ -217,7 +153,7 @@ class TdeeAppState extends State<TdeeApp> {
                     backgroundColor: Colors.blue,
                     minimumSize: const Size(double.infinity, 50),
                   ),
-                  child: const Text('คำนวณ'),
+                  child: const Text('Calculate'),
                 ),
                 const SizedBox(height: 20),
                 if (_bmr != null && _tdee != null)
@@ -231,7 +167,6 @@ class TdeeAppState extends State<TdeeApp> {
               ],
             ),
           ),
->>>>>>> 8d90c4f78a7aaefd5dc0d626213c75d77c457225
         ),
       ),
     );
