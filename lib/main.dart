@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'showinfo.dart';
-void main () {
+import 'myTDEE.dart';
+
+void main() {
   runApp(MaterialApp(
-    home: ShowInfo(),
-    )
-  );
+    home: TdeeApp(),
+  ));
 }
